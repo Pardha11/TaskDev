@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  validates :status, inclusion: { in: %w[pending done] }
+  validates :status, inclusion: { in: %w[pending taken done] }
   validates :short_description, presence: true, length: { maximum: 255 }
   validates :long_description, presence: true
   belongs_to :user

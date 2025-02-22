@@ -2,11 +2,37 @@
 
 <%= render @task %>
 
+<p>
+  <strong>Requested by:</strong>
+  <%= @task.user.username %>
+</p>
+
 <div>
   <%= link_to "Edit this task", edit_task_path(@task) %> |
   <%= link_to "Back to tasks", tasks_path %>
 
   <%= button_to "Destroy this task", @task, method: :delete %>
+  <% if @task.user == current_user %>
+    <% if @task.status == 'pending' %>
+      <%= button_to "Mark as Done", mark_as_done_task_path(@task), 
+          params: { task: { id: @task.id, status: 'done' } }, 
+          method: :patch, data: { confirm: "Mark this task as done?" }, class: "btn btn-success" %>
+    <% else %>
+      <%= button_to "Mark as Pending", mark_as_pending_task_path(@task), 
+          params: { task: { id: @task.id, status: 'pending' } }, 
+          method: :patch, data: { confirm: "Mark this task as pending?" }, class: "btn btn-primary" %>
+    <% end %>
+  <% else %>
+    <% if @task.status == 'pending' %>
+      <%= button_to "Mark as Taken", mark_as_taken_task_path(@task), 
+          params: { task: { id: @task.id, status: 'taken' } }, 
+          method: :patch, data: { confirm: "Mark this task as taken?" }, class: "btn btn-primary" %>
+    <% elsif @task.status == 'taken' %>
+      <%= button_to "Mark as Pending", mark_as_pending_task_path(@task), 
+          params: { task: { id: @task.id, status: 'pending' } }, 
+          method: :patch, data: { confirm: "Mark this task as pending?" }, class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
 </div>
 
 <%= link_to "Back", tasks_path %>

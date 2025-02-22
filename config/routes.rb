@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   get "home/services", to: "home#services", as: :home_services
   get "home/contact", to: "home#contact", as: :home_contact
   get "home/request_programmer", to: "home#request_programmer", as: :home_request_programmer
-  patch "tasks/:id/mark_as_done", to: "tasks#mark_as_done", as: :mark_as_done_task
+  patch "tasks/:id/mark_as_taken", to: "tasks#mark_as_taken", as: :mark_as_taken_task
   patch "tasks/:id/mark_as_pending", to: "tasks#mark_as_pending", as: :mark_as_pending_task
+  patch "tasks/:id/mark_as_done", to: "tasks#mark_as_done", as: :mark_as_done_task
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'tasks#index'
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

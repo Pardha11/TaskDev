@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[new create edit update destroy mark_as_taken mark_as_pending mark_as_done]
+  before_action :set_task, only: %i[show edit update destroy mark_as_taken mark_as_pending mark_as_done]
 
   # GET /tasks or /tasks.json
   def index
@@ -21,7 +22,6 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    # @task = Task.new(task_params)
     @task = current_user.tasks.build(task_params)
 
     respond_to do |format|
@@ -57,18 +57,16 @@ class TasksController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  def mark_as_done
-    @task = Task.find(params[:id])
-    @task.update(status: "done")
+
+  def mark_as_taken
+    @task.update(status: "taken")
     respond_to do |format|
-      format.html { redirect_to tasks_path, status: :see_other, notice: "Marked as done." }
+      format.html { redirect_to tasks_path, status: :see_other, notice: "Marked as taken." }
       format.json { head :no_content }
     end
   end
 
   def mark_as_pending
-    @task = Task.find(params[:id])
     @task.update(status: "pending")
     respond_to do |format|
       format.html { redirect_to tasks_path, status: :see_other, notice: "Marked as pending." }
@@ -76,14 +74,22 @@ class TasksController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
+  def mark_as_done
+    @task.update(status: "done")
+    respond_to do |format|
+      format.html { redirect_to tasks_path, status: :see_other, notice: "Marked as done." }
+      format.json { head :no_content }
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:price, :short_description, :long_description, :status, :tech)
-    end
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_task
+    @task = Task.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def task_params
+    params.require(:task).permit(:price, :short_description, :long_description, :status, :tech)
+  end
 end

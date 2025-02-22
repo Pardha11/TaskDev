@@ -19,15 +19,6 @@
             </div>
             <div class="card-footer">
               <%= link_to "Show", task, class: "btn btn-primary" %>
-              <% if task.status == 'pending' %>
-                <%= button_to "Mark as Done", mark_as_done_task_path(task), 
-                    params: { task: { id: task.id, status: 'done' } }, 
-                    method: :patch, data: { confirm: "Mark this task as done?" }, class: "btn btn-primary" %>
-              <% else %>
-                <%= button_to "Mark as Pending", mark_as_pending_task_path(task), 
-                    params: { task: { id: task.id, status: 'pending' } }, 
-                    method: :patch, data: { confirm: "Mark this task as pending?" }, class: "btn btn-primary" %>
-              <% end %>
             </div>
           </div>
         </div>
