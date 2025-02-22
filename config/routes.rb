@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   get "home/index"
+  get "home/introduction", to: "home#introduction", as: :home_introduction
+  get "home/services", to: "home#services", as: :home_services
+  get "home/contact", to: "home#contact", as: :home_contact
+  get "home/request_programmer", to: "home#request_programmer", as: :home_request_programmer
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'home#index'
