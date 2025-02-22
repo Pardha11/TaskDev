@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit update destroy mark_as_done mark_as_pending ]
 
   # GET /tasks or /tasks.json
   def index
@@ -57,6 +57,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def mark_as_done
+    @task.update(status: 'done')
+    redirect_to tasks_path, notice: 'Task marked as done.'
+  end
+
+  def mark_as_pending
+    @task.update(status: 'pending')
+    redirect_to tasks_path, notice: 'Task marked as pending.'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -65,6 +75,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:price)
+      params.require(:task).permit(:price, :status)
     end
 end

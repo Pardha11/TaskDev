@@ -9,6 +9,11 @@
     <%= render task %>
     <p>
       <%= link_to "Show this task", task %>
+      <% if task.status == 'pending' %>
+        <%= link_to "Mark as Done", mark_as_done_task_path(task), method: :patch %>
+      <% else %>
+        <%= link_to "Mark as Pending", mark_as_pending_task_path(task), method: :patch %>
+      <% end %>
     </p>
   <% end %>
 </div>

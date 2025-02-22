@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   get "home/services", to: "home#services", as: :home_services
   get "home/contact", to: "home#contact", as: :home_contact
   get "home/request_programmer", to: "home#request_programmer", as: :home_request_programmer
-  resources :tasks
+  resources :tasks do
+    member do
+      patch :mark_as_done
+      patch :mark_as_pending
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'home#index'
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
