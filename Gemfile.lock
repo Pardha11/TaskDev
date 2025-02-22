@@ -311,7 +311,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
-  devise (~> 4.9, >= 4.9.4)
+  devise
   importmap-rails
   jbuilder
   octicons
