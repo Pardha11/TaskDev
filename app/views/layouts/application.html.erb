@@ -21,6 +21,7 @@
             background-color: #121212;
             color: #ffffff;
         }
+
         .card {
             background-color: #1e1e1e;
             border: 1px solid #333;
@@ -48,6 +49,8 @@
     <% if notice %>
       <%= render 'layouts/alerts' %>
     <% end %>
-    <%= yield %>
+    <div style="padding: 50px">
+      <%= yield %>
+    </div>
   </body>
 </html>

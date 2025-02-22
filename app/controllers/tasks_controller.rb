@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy mark_as_done mark_as_pending ]
-
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :correct_user, only: [:edit, :update, :destroy, :mark_as_done, :mark_as_pending]
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.all
@@ -56,13 +57,17 @@ class TasksController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  def correct_user
+    @tasks = current_user.tasks.find_by(id: params[:id])
+    redirect_to root_url, notice: "Not Authorized" if @tasks.nil?
+  end
   def mark_as_done
     @task.update(status: 'done')
     redirect_to tasks_path, notice: 'Task marked as done.'
   end
 
   def mark_as_pending
+    @task = Task.find(params[:id])
     @task.update(status: 'pending')
     redirect_to tasks_path, notice: 'Task marked as pending.'
   end

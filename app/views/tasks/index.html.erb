@@ -16,13 +16,14 @@
               <p class="card-text">Lorem ipsum</p>
               <p class="card-text"><strong>Payout: </strong> $<%= task.price %></p>
               <p class="card-text"><strong>Technologies:</strong> Placeholder</p>
+              <p class="card-text"><strong>Status:</strong> <%= task.status %></p>
             </div>
             <div class="card-footer">
               <%= link_to "Show", task, class: "btn btn-primary" %>
               <% if task.status == 'pending' %>
-                <%= link_to "Mark as Done", mark_as_done_task_path(task), method: :patch, class: "btn btn-primary" %>
+                <%= button_to "Mark as Done", mark_as_done_path(task), method: :post, class: "btn btn-primary" %>
               <% else %>
-                <%= link_to "Mark as Pending", mark_as_pending_task_path(task), method: :patch, class: "btn btn-primary" %>
+                <%= link_to "Mark as Pending", mark_as_pending_path(task), method: :post, class: "btn btn-primary" %>
               <% end %>
             </div>
           </div>
