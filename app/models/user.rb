@@ -4,8 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :tasks
-
-  def username
-    email.split('@').first
-  end
+  validates :email, presence: true, uniqueness: true
 end

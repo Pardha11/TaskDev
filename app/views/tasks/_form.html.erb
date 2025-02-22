@@ -31,6 +31,11 @@
     <%= form.select :status, options_for_select([['Pending', 'pending'], ['Done', 'done']], task.status) %>
   </div>
 
+  <div class="field">
+    <%= form.label :tech, "Programming Languages" %>
+    <%= form.text_field :tech %>
+  </div>
+
   <div>
     <%= form.submit %>
   </div>
