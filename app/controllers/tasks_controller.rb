@@ -12,7 +12,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = current_user.friends.build
+    @task = current_user.tasks.build
   end
 
   # GET /tasks/1/edit
@@ -21,7 +21,8 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    # @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     respond_to do |format|
       if @task.save
@@ -53,6 +54,24 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to tasks_path, status: :see_other, notice: "Task was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
+  
+  def mark_as_done
+    @task = Task.find(params[:id])
+    @task.update(status: "done")
+    respond_to do |format|
+      format.html { redirect_to tasks_path, status: :see_other, notice: "Marked as done." }
+      format.json { head :no_content }
+    end
+  end
+
+  def mark_as_pending
+    @task = Task.find(params[:id])
+    @task.update(status: "pending")
+    respond_to do |format|
+      format.html { redirect_to tasks_path, status: :see_other, notice: "Marked as pending." }
       format.json { head :no_content }
     end
   end
