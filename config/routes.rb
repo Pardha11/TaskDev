@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get "home/index"
   get "home/introduction", to: "home#introduction", as: :home_introduction
   get "home/services", to: "home#services", as: :home_services
