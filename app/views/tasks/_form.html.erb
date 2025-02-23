@@ -1,3 +1,4 @@
+<br>
 <%= form_with(model: task, local: true) do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation">
@@ -10,33 +11,32 @@
       </ul>
     </div>
   <% end %>
+  <form>
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <%= form.text_field :title,class:"form-control", style: "width: 300px;" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :price %>
-    <%= form.number_field :price %>
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Payout Amount</label>
+      <%= form.number_field :price,class:"form-control",style: "width: 80px;"%>
+    </div>
 
-  <div class="field">
-    <%= form.label :short_description %>
-    <%= form.text_field :short_description %>
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Short Description of the project</label>
+      <%= form.text_field :short_description,class:"form-control"%>
+    </div>
 
-  <div class="field">
-    <%= form.label :long_description %>
-    <%= form.text_area :long_description %>
-  </div>
+    <div class="mb-3 mw-10">
+      <label class="form-label">Long Description</label>
+      <%= form.text_field :long_description,class:"form-control",  style: "height: 200px;"%>
+    </div>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, options_for_select([['Pending', 'pending'], ['Done', 'done']], task.status) %>
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Tech stack</label>
+      <%= form.text_field :tech,class:"form-control" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :tech, "Programming Languages" %>
-    <%= form.text_field :tech %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+    <%= form.submit class:"btn btn-primary"%>
+  </form>
 <% end %>
