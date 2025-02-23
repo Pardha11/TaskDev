@@ -10,7 +10,6 @@
               <p class="card-text"> <%= task.short_description %></p>
               <br>
               <p class="card-text"><strong>Requested by: </strong> <%= task.user ? task.user.email.split('@').first : 'Unknown' %></p>
-              <p class="card-text"><strong>Rating: </strong> $<%= task.user.reveiw %></p>
               <p class="card-text"><strong>Payout: </strong> $<%= task.price %></p>
               <p class="card-text"><strong>Tech Stack:</strong> <%= task.tech %></p>
               <p class="card-text"><strong>Status:</strong> <%= task.status %></p>
