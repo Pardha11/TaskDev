@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create edit update destroy mark_as_taken mark_as_pending mark_as_done]
+  before_action :authenticate_user!, only: %i[new create edit update destroy mark_as_taken mark_as_pending mark_as_done dashboard]
   before_action :set_task, only: %i[show edit update destroy mark_as_taken mark_as_pending mark_as_done]
 
   # GET /tasks or /tasks.json
@@ -82,6 +82,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def dashboard
+    @client_tasks = current_user.tasks
+    @programmer_tasks = Task.where(status: 'taken').where.not(user_id: current_user.id)
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_task
@@ -90,7 +95,6 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:title, :price, :short_description, :long_description, :status, :tech)
+    params.require(:task).permit(:price, :short_description, :long_description, :status, :tech, :title)
   end
-
 end

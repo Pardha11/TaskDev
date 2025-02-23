@@ -1,0 +1,57 @@
+<% content_for :title, "Dashboard" %>
+
+<h1>Dashboard</h1>
+
+<h2>Your Tasks</h2>
+<div id="client_tasks">
+  <div class="container mt-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% @client_tasks.each do |task| %>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title"><%= task.title %></h5>
+              <br>
+              <p class="card-text"><strong>Requested by: </strong> <%= task.user ? task.user.email.split('@').first : 'Unknown' %></p>
+              <p class="card-text"><strong>Description: </strong> <%= task.short_description %></p>
+              <p class="card-text"><strong>Payout: </strong> $<%= task.price %></p>
+              <p class="card-text"><strong>Tech Stack:</strong> <%= task.tech %></p>
+              <p class="card-text"><strong>Status:</strong> <%= task.status %></p>
+            </div>
+            <div class="card-footer">
+              <%= link_to "Show", task, class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<h2>Tasks You've Taken</h2>
+<div id="programmer_tasks">
+  <div class="container mt-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% @programmer_tasks.each do |task| %>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title"><%= task.title %></h5>
+              <br>
+              <p class="card-text"><strong>Requested by: </strong> <%= task.user ? task.user.email.split('@').first : 'Unknown' %></p>
+              <p class="card-text"><strong>Description: </strong> <%= task.short_description %></p>
+              <p class="card-text"><strong>Payout: </strong> $<%= task.price %></p>
+              <p class="card-text"><strong>Tech Stack:</strong> <%= task.tech %></p>
+              <p class="card-text"><strong>Status:</strong> <%= task.status %></p>
+            </div>
+            <div class="card-footer">
+              <%= link_to "Show", task, class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= link_to "Back to Home", root_path %>
