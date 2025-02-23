@@ -162,6 +162,7 @@ GEM
     parser (3.3.7.1)
       ast (~> 2.4.1)
       racc
+    pg (0.18.4)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -315,6 +316,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   octicons
+  pg (~> 0.18.4)
   puma (>= 5.0)
   rails (~> 7.2.1, >= 7.2.1.1)
   rubocop-rails-omakase
