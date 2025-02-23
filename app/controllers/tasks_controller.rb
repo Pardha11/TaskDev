@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy mark_as_taken mark_as_pending mark_as_done dashboard]
   before_action :set_task, only: %i[show edit update destroy mark_as_taken mark_as_pending mark_as_done]
-
+  before_action :correct_user, only: %i[edit update destroy mark_as_taken mark_as_done]
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.all
@@ -26,7 +26,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: "Task was successfully created." }
+        format.html { redirect_to @task, notice: @task.title+" is successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class TasksController < ApplicationController
     @task.destroy!
 
     respond_to do |format|
-      format.html { redirect_to tasks_path, status: :see_other, notice: "Task was successfully destroyed." }
+      format.html { redirect_to tasks_path, status: :see_other, notice: @task.title+" was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -61,7 +61,7 @@ class TasksController < ApplicationController
   def mark_as_taken
     @task.update(status: "taken")
     respond_to do |format|
-      format.html { redirect_to tasks_path, status: :see_other, notice: "Marked as taken." }
+      format.html { redirect_to tasks_path, status: :see_other, notice: "You took the "+@task.title+" task" }
       format.json { head :no_content }
     end
   end
@@ -81,7 +81,10 @@ class TasksController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    redirect_to root_url, notice: "Not Authorized to edit this" if @task.nil?
+  end
   def dashboard
     @client_tasks = current_user.tasks
     @programmer_tasks = Task.where(status: 'taken').where.not(user_id: current_user.id)

@@ -1,42 +1,71 @@
-<p style="color: green"><%= notice %></p>
+<style>
+    .button-container {
+        display: flex;
+        gap: 20px;
+    }
+</style>
+<div class="container-fluid bg-dark py-5">
+  <h4>
+    <%= @task.title %>
+  </h4>
+  <p>
+    <%= @task.long_description %>
+  </p>
 
-<%= render @task %>
+  <p>
+    <strong>Requested by:</strong>
+    <%= @task.user ? @task.user.email : 'Unknown' %>
+  </p>
 
-<p>
-  <strong>Requested by:</strong>
-  <%= @task.user ? @task.user.email.split('@').first : 'Unknown' %>
+  <p>
+  <strong>Payout:</strong>
+  $<%=@task.price %>
 </p>
 
 <p>
-  <strong>Programming Languages:</strong>
+  <strong>Tech Stack:</strong>
   <%= @task.tech %>
 </p>
 
-<div>
-  <%= link_to "Edit this task", edit_task_path(@task) %> |
-
-  <% if @task.user == current_user %>
-  <%= button_to "Destroy this task", @task, method: :delete %>
-    <% if @task.status == 'pending' %>
-      <%= button_to "Mark as Done", mark_as_done_task_path(@task), 
-          params: { task: { id: @task.id, status: 'done' } }, 
-          method: :patch, data: { confirm: "Mark this task as done?" }, class: "btn btn-success" %>
-    <% else %>
-      <%= button_to "Mark as Pending", mark_as_pending_task_path(@task), 
-          params: { task: { id: @task.id, status: 'pending' } }, 
-          method: :patch, data: { confirm: "Mark this task as pending?" }, class: "btn btn-primary" %>
-    <% end %>
-  <% else %>
-    <% if @task.status == 'pending' %>
-      <%= button_to "Mark as Taken", mark_as_taken_task_path(@task), 
-          params: { task: { id: @task.id, status: 'taken' } }, 
-          method: :patch, data: { confirm: "Mark this task as taken?" }, class: "btn btn-primary" %>
-    <% elsif @task.status == 'taken' %>
-      <%= button_to "Mark as Pending", mark_as_pending_task_path(@task), 
-          params: { task: { id: @task.id, status: 'pending' } }, 
-          method: :patch, data: { confirm: "Mark this task as pending?" }, class: "btn btn-primary" %>
-    <% end %>
+  <% if @task.status == 'pending' %>
+    <div class="container-fluid bg-red" style="z-index: 10; background-color: darkred">
+      <p>pending</p>
+    </div>
+    <% elsif @task.status == 'taken'%>
+    <div class="container-fluid bg-yellow" style="z-index: 10; background-color: #f8f861; color: #1e1e1e">
+      <p>pending</p>
+    </div>
+    <% elsif @task.status == 'done' %>
+    <div class="container-fluid bg-green" style="z-index: 10; background-color: darkgreen">
+      <p>done</p>
+    </div>
   <% end %>
+
+
+
+<% if @task.user == current_user %>
+<% if @task.status == 'taken' %>
+  <%= button_to "Mark as Done", mark_as_done_task_path(@task),
+                params: { task: { id: @task.id, status: 'done' } },
+                method: :patch, data: { confirm: "Mark this task as done?" }, class: "btn btn-success" %>
+<%end %>
+</div>
+<br>
+<div class="button-container">
+  <%= button_to "Edit this task", edit_task_path(@task), class: "btn btn-outline-primary"%>
+  <%= button_to "Destroy this task", @task, method: :delete, class: "btn btn-outline-danger" %>
 </div>
 
-<%= link_to "Back", tasks_path %>
+<% else %>
+</div>
+  <% if @task.status == 'pending' %>
+    <br>
+    <%= button_to "Take up this task", mark_as_taken_task_path(@task),
+        params: { task: { id: @task.id, status: 'taken' } },
+        method: :patch, data: { confirm: "Take this task?" }, class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+</div>
+<%= link_to "Back", tasks_path, class:"btn btn-dark", style:"position: relative; left: 50px;" %>
+
+

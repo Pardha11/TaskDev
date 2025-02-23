@@ -1,7 +1,4 @@
 <% content_for :title, "Tasks" %>
-
-<h1>Tasks</h1>
-
 <div id="tasks">
   <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -10,9 +7,10 @@
           <div class="card h-100">
             <div class="card-body">
               <h5 class="card-title"><%= task.title %></h5>
+              <p class="card-text"> <%= task.short_description %></p>
               <br>
               <p class="card-text"><strong>Requested by: </strong> <%= task.user ? task.user.email.split('@').first : 'Unknown' %></p>
-              <p class="card-text"><strong>Description: </strong> <%= task.short_description %></p>
+              <p class="card-text"><strong>Rating: </strong> $<%= task.user.reveiw %></p>
               <p class="card-text"><strong>Payout: </strong> $<%= task.price %></p>
               <p class="card-text"><strong>Tech Stack:</strong> <%= task.tech %></p>
               <p class="card-text"><strong>Status:</strong> <%= task.status %></p>
@@ -26,6 +24,3 @@
     </div>
   </div>
 </div>
-
-<%= link_to "New task", new_task_path %>
-<%= link_to "Back to Home", root_path %>
