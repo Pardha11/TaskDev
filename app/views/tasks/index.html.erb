@@ -11,8 +11,9 @@
         <div class="col">
           <div class="card h-100">
             <div class="card-body">
-              <h5 class="card-title">title goes here</h5>
-              <p class="card-text"><strong>User: </strong> <%= task.user ? task.user.email.split('@').first : 'Unknown' %></p>
+              <h5 class="card-title"><%= task.title %></h5>
+              <br>
+              <p class="card-text"><strong>Requested by: </strong> <%= task.user ? task.user.email.split('@').first : 'Unknown' %></p>
               <p class="card-text"><strong>Description: </strong> <%= task.short_description %></p>
               <p class="card-text"><strong>Payout: </strong> $<%= task.price %></p>
               <p class="card-text"><strong>Tech Stack:</strong> <%= task.tech %></p>
