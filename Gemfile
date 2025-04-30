@@ -54,7 +54,7 @@ group :development do
 end
 
 group :production do
-  gem 'pg', '~> 0.18.4'
+  gem 'pg', '~> 1.5.9'
 end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
